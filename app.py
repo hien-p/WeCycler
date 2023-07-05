@@ -57,7 +57,7 @@ def chat(input_user, nums):
 
     db = connect_redis()
     explorer = FeatureExplorer(MODEL, db)
-    feat, cond = explorer.ask_user(input_user, nums)
+    product, feat, cond = explorer.ask_user(input_user, nums)
     
     
     
@@ -67,7 +67,7 @@ def chat(input_user, nums):
     except:
         result = feat['questions']
         
-    return result
+    return product,result
 
 
 
@@ -119,17 +119,17 @@ if selected_options == '📝Analytics':
             message(st.session_state.user_text,is_user=True, key=str("hello") + "_user",avatar_style="adventurer", # change this for different user icon
                 seed=123,)
 
-            data = chat(str(st.session_state.user_text),  st.session_state.nums_Q)
+            product,data = chat(str(st.session_state.user_text),  st.session_state.nums_Q)
             #data = parse_nested_json(response['result'])
 
         # Routing class 
         
         if data:
-            st.balloons()
+            
             message("Let's learn more about your products. Please answer the following questions: ")
             list_answer = {}
             metadata_feature, metadata_conditions = [], []
-            #number = st.number_input('Trash Quantity:',min_value=1,step=1)
+            
             
             with st.form(key='my_form'):
                 message(f"Features:{st.session_state.nums_Q} + Conditions: {st.session_state.nums_Q} ")
@@ -145,6 +145,7 @@ if selected_options == '📝Analytics':
                     )    
                     metadata_feature.append(str(item['question'])+ " " + str(st.session_state.boxselect[item['question']]))
                 
+                list_answer['product'] = product
                 list_answer['title'] = st.session_state.user_text
                 list_answer['features'] = metadata_feature
                 
@@ -152,14 +153,13 @@ if selected_options == '📝Analytics':
                 if st.form_submit_button('Confirm Responses'):
                     with st.spinner('I loading...'):
                         redis_db = RedisVectorDB()
-                        
                         #[redis_db.add_new_wanted(a) for a in data]
                         st.write(list_answer)
                         #data = {"title": "I have an old phone", "features": ["My laptop has 4 GB RAM", "Is it function well? Well"]}
                         
-                        b = redis_db.search_wanted(list_answer)
+                        #b = redis_db.search_wanted(list_answer)
                         #b = redis_db.search_wanted(data)
-                        st.write(b)
+                        #st.write(b)
                     st.session_state['button'] = False
 
 
