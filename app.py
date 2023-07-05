@@ -27,7 +27,7 @@ from botcore.bot_agent import AgentBot
 from botcore.utils.memory_utils import QAMemory
 
 # redis
-from botcore.bot_redis import RedisVectorDB
+from botcore.redis_db import RedisDB
 from botcore.test_data import TEST_WANTED_DATA 
 
 
@@ -145,21 +145,20 @@ if selected_options == '📝Analytics':
                     )    
                     metadata_feature.append(str(item['question'])+ " " + str(st.session_state.boxselect[item['question']]))
                 
-                list_answer['product'] = product
+                list_answer['product'] = product.strip()
                 list_answer['title'] = st.session_state.user_text
                 list_answer['features'] = metadata_feature
                 
                 #list_answer['Quantity'] = st.session_state.number_quantity
                 if st.form_submit_button('Confirm Responses'):
                     with st.spinner('I loading...'):
-                        redis_db = RedisVectorDB()
+                        redis_db = RedisDB()
                         #[redis_db.add_new_wanted(a) for a in data]
                         st.write(list_answer)
                         #data = {"title": "I have an old phone", "features": ["My laptop has 4 GB RAM", "Is it function well? Well"]}
+                        results = redis_db.search_in_wanted(list_answer)
                         
-                        #b = redis_db.search_wanted(list_answer)
-                        #b = redis_db.search_wanted(data)
-                        #st.write(b)
+                        st.write(results)
                     st.session_state['button'] = False
 
 
