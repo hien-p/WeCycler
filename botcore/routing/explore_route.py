@@ -30,7 +30,7 @@ class FeatureExplorer():
         self.set_qa(f"{key}_feat", feat_qa[output_key])
         self.set_qa(f"{key}_cond", cond_qa[output_key])
 
-        return product,self.parse_all(feat_qa[output_key], cond_qa[output_key])
+        return [product,*self.parse_all(feat_qa[output_key], cond_qa[output_key])]
     
     def parse_all(self, feat_json_str: str, cond_json_str: str):
         feats = parse_nested_json(feat_json_str)
