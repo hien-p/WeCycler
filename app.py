@@ -87,6 +87,9 @@ if "number_quantity" not in st.session_state:
 if "nums_Q" not in st.session_state:
      st.session_state.nums_Q = 1
 
+if "list_answer" not in st.session_state:
+    st.session_state.list_answer = ""
+
 
 if selected_options == '📝Analytics':
     with open("src/components/UI/test.md", "r") as sidebar_file:
@@ -153,11 +156,11 @@ if selected_options == '📝Analytics':
                 if st.form_submit_button('Confirm Responses'):
                     with st.spinner('I loading...'):
                         redis_db = RedisDB()
-                        #[redis_db.add_new_wanted(a) for a in data]
+
+                        st.session_state.list_answer = list_answer
                         st.write(list_answer)
-                        #data = {"title": "I have an old phone", "features": ["My laptop has 4 GB RAM", "Is it function well? Well"]}
-                        results = redis_db.search_in_wanted(list_answer)
                         
+                        results = redis_db.search_in_wanted(list_answer)
                         st.write(results)
                     st.session_state['button'] = False
 
@@ -221,25 +224,24 @@ if selected_options == '💬chat Bot':
         
         
     with col1:
-        datas = {
-        
-        "title": "I have a phone",
-        "features": [
-            "What is the screen size? 5.5 inches",
-            "What is the screen resolution? 1920x1080 pixels",
-            "What is the RAM size? 2 GB",
-            "What is the storage capacity? 16 GB",
-            "Is there any malfunction or defect? yes",
-            "What is the current physical condition of the product? poor",
-            "Is there any warranty for this product? no"
-        ]
-    }
+    #     datas = {
+    #     "title": "I have a phone",
+    #     "features": [
+    #         "What is the screen size? 5.5 inches",
+    #         "What is the screen resolution? 1920x1080 pixels",
+    #         "What is the RAM size? 2 GB",
+    #         "What is the storage capacity? 16 GB",
+    #         "Is there any malfunction or defect? yes",
+    #         "What is the current physical condition of the product? poor",
+    #         "Is there any warranty for this product? no"
+    #     ]
+    # }
     
         
         if prompt := st.text_input(""):
             with st.spinner(text="Loading"):
                 st.session_state.messages.append({"role": "user", "content": prompt})
-                res =   conservationBot(datas, prompt)
+                res =   conservationBot( st.session_state.list_answer, prompt)
                 if res: 
                     st.session_state["res"] = res
                     
