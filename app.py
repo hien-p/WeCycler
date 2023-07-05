@@ -152,12 +152,12 @@ if selected_options == '📝Analytics':
                 if st.form_submit_button('Confirm Responses'):
                     with st.spinner('I loading...'):
                         redis_db = RedisVectorDB()
-                        data = TEST_WANTED_DATA
-                        [redis_db.add_new_wanted(a) for a in data]
                         
-                        data = {"title": "I have an old phone", "features": ["My laptop has 4 GB RAM", "Is it function well? Well"]}
+                        #[redis_db.add_new_wanted(a) for a in data]
                         st.write(list_answer)
-                        b = redis_db.search_wanted(data)
+                        #data = {"title": "I have an old phone", "features": ["My laptop has 4 GB RAM", "Is it function well? Well"]}
+                
+                        b = redis_db.search_wanted(list_answer)
                         #b = redis_db.search_wanted(data)
                         st.write(b)
                     st.session_state['button'] = False
