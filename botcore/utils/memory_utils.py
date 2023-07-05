@@ -5,6 +5,7 @@ def load_sample_qa():
 
     data = {
   "title": "Old phone",
+  "product": "phone",
   "features": [
     "What is the screen size? 2.8 inches",
     "What is the RAM size? 512 MB",

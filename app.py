@@ -156,7 +156,7 @@ if selected_options == '📝Analytics':
                         #[redis_db.add_new_wanted(a) for a in data]
                         st.write(list_answer)
                         #data = {"title": "I have an old phone", "features": ["My laptop has 4 GB RAM", "Is it function well? Well"]}
-                
+                        
                         b = redis_db.search_wanted(list_answer)
                         #b = redis_db.search_wanted(data)
                         st.write(b)
