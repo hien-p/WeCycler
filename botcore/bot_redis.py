@@ -9,11 +9,13 @@ import sys
 sys.path.append(f"{os.path.dirname(__file__)}/../")
 from botcore.setup import get_openai_embeddings, load_my_env
 
+import streamlit as st
+
 def connect_redis():
     load_my_env()
-    host = os.getenv("REDIS_HOST")
-    password = os.getenv("REDIS_PASS")
-    port = os.getenv("REDIS_PORT")
+    host = st.secrets['REDIS_HOST']
+    password =  st.secrets['REDIS_PASS']
+    port = st.secrets['REDIS_PORT']
     db = redis.Redis(host = host, port = port, password=password, decode_responses=True)
     return db
 
@@ -23,7 +25,7 @@ class RedisVectorDB:
     def __init__(self):
         load_my_env()
         self.embeddings = get_openai_embeddings()
-        self.url = os.getenv("REDIS_CLOUD")
+        self.url = st.secrets['REDIS_CLOUD']
         
         self.redis = {}
         self.redis['wanted'] = Redis(redis_url = self.url, index_name = "wanted",\
