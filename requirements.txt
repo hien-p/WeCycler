@@ -1,0 +1,6 @@
+streamlit
+streamlit_chat
+streamlit_option_menu
+redis
+langchain
+python-dotenv
