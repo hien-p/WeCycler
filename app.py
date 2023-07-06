@@ -224,24 +224,28 @@ if selected_options == '💬chat Bot':
         
         
     with col1:
-    #     datas = {
-    #     "title": "I have a phone",
-    #     "features": [
-    #         "What is the screen size? 5.5 inches",
-    #         "What is the screen resolution? 1920x1080 pixels",
-    #         "What is the RAM size? 2 GB",
-    #         "What is the storage capacity? 16 GB",
-    #         "Is there any malfunction or defect? yes",
-    #         "What is the current physical condition of the product? poor",
-    #         "Is there any warranty for this product? no"
-    #     ]
-    # }
-    
+        datas = {
+        "title": "I have a phone",
+        "features": [
+            "What is the screen size? 5.5 inches",
+            "What is the screen resolution? 1920x1080 pixels",
+            "What is the RAM size? 2 GB",
+            "What is the storage capacity? 16 GB",
+            "Is there any malfunction or defect? yes",
+            "What is the current physical condition of the product? poor",
+            "Is there any warranty for this product? no"
+        ]
+    }
+
         
         if prompt := st.text_input(""):
             with st.spinner(text="Loading"):
                 st.session_state.messages.append({"role": "user", "content": prompt})
-                res =   conservationBot( st.session_state.list_answer, prompt)
+                
+                if st.session_state.list_answer != "":
+                    res =   conservationBot( st.session_state.list_answer, prompt)
+                else:   
+                    res =   conservationBot( datas, prompt)
                 if res: 
                     st.session_state["res"] = res
                     
