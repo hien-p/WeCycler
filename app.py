@@ -101,17 +101,7 @@ if selected_options == '📝Analytics':
 
     col_number, col_qua = st.columns(2)
     
-    with col_number:
-        nums_Q = st.number_input("Number of question",1, 10, 1)
-        if nums_Q > 2:
-            st.session_state.nums_Q  = nums_Q
-    with col_qua:
-        number_qua = st.number_input('Trash Quantity:',min_value=1,step=1)
-
-        if number_qua > 1: 
-            st.session_state.number_quantity = number_qua
-        
-        
+            
     button_1 = st.button("Submit") 
     if st.session_state.get('button') != True:
         st.session_state['button'] = button_1    
@@ -122,7 +112,7 @@ if selected_options == '📝Analytics':
             message(st.session_state.user_text,is_user=True, key=str("hello") + "_user",avatar_style="adventurer", # change this for different user icon
                 seed=123,)
 
-            product,data = chat(str(st.session_state.user_text),  st.session_state.nums_Q)
+            product,data = chat(str(st.session_state.user_text),  4)
             #data = parse_nested_json(response['result'])
 
         # Routing class 
