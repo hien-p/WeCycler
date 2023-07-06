@@ -101,7 +101,7 @@ if selected_options == '📝Analytics':
 
     col_number, col_qua = st.columns(2)
     
-            
+
     button_1 = st.button("Submit") 
     if st.session_state.get('button') != True:
         st.session_state['button'] = button_1    
@@ -150,8 +150,8 @@ if selected_options == '📝Analytics':
                         st.session_state.list_answer = list_answer
                         st.write(list_answer)
                         
-                        results = redis_db.search_in_wanted(list_answer)
-                        st.write(results)
+                        #results = redis_db.search_in_wanted(list_answer)
+                        #st.write(results)
                     st.session_state['button'] = False
 
 
