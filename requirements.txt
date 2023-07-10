@@ -5,3 +5,4 @@ redis
 langchain
 python-dotenv
 openai
+streamlit_pills
